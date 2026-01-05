@@ -1,0 +1,51 @@
+# Docker build artifacts
+*.tar
+*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Test files
+test/
+tests/
+*.test
+
+# Environment files
+.env
+.env.local
+
+# Build cache
+.cache/
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# Python cache (if using any Python tools)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Git files
+.git/
+.gitattributes
+
+# Documentation build artifacts
+docs/_build/
+site/

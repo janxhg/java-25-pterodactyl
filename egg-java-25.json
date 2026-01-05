@@ -1,0 +1,86 @@
+{
+    "_comment": "Java 25 Egg for Pterodactyl - Ready for Hytale",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2026-01-05T21:17:00+00:00",
+    "name": "Java 25 Generic",
+    "author": "TurboMC",
+    "description": "Generic Java 25 server egg for Pterodactyl. Designed for Hytale and other Java 25 applications.",
+    "features": [
+        "eula",
+        "java_version",
+        "pid_limit"
+    ],
+    "docker_images": {
+        "Java 25": "ghcr.io/pterodactyl/yolks:java_25"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms{{SERVER_MEMORY}}M -Xmx{{SERVER_MEMORY}}M {{JAVA_ARGS}} -jar {{SERVER_JARFILE}} {{SERVER_ARGS}}",
+    "config": {
+        "files": "{\r\n    \"server.properties\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"server-ip\": \"0.0.0.0\",\r\n            \"server-port\": \"{{server.build.default.port}}\",\r\n            \"query.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \")! For help, type \"\r\n}",
+        "logs": "{}",
+        "stop": "stop"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\n\ncd /mnt/server || exit 1\n\necho \"========================================\"\necho \"Java 25 Server Installation\"\necho \"========================================\"\n\n# Check if SERVER_JARFILE is a URL\nif [[ \"${SERVER_JARFILE}\" == http* ]]; then\n    echo \"Downloading server JAR from: ${SERVER_JARFILE}\"\n    curl -sSL -o server.jar \"${SERVER_JARFILE}\"\n    echo \"Download complete!\"\nelse\n    echo \"SERVER_JARFILE is not a URL. Assuming JAR will be uploaded manually.\"\n    echo \"Please upload your server JAR file and name it: ${SERVER_JARFILE}\"\nfi\n\n# Accept EULA if enabled\nif [[ \"${AUTO_EULA}\" == \"1\" ]] || [[ \"${AUTO_EULA}\" == \"true\" ]]; then\n    echo \"eula=true\" > eula.txt\n    echo \"EULA automatically accepted.\"\nfi\n\necho \"========================================\"\necho \"Installation complete!\"\necho \"========================================\"",
+            "container": "eclipse-temurin:25-jdk-jammy",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server JAR File",
+            "description": "The name of the server JAR file or URL to download it from.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "server.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Memory",
+            "description": "The amount of memory (in MB) to allocate to the server.",
+            "env_variable": "SERVER_MEMORY",
+            "default_value": "2048",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|numeric|min:512",
+            "field_type": "text"
+        },
+        {
+            "name": "Java Arguments",
+            "description": "Additional JVM arguments to pass to Java.",
+            "env_variable": "JAVA_ARGS",
+            "default_value": "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Arguments",
+            "description": "Additional arguments to pass to the server JAR.",
+            "env_variable": "SERVER_ARGS",
+            "default_value": "nogui",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Accept EULA",
+            "description": "Automatically accept the Minecraft EULA during installation.",
+            "env_variable": "AUTO_EULA",
+            "default_value": "true",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        }
+    ]
+}

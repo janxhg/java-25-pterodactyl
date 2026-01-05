@@ -1,0 +1,28 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+
+# IDE
+.vscode
+.idea
+*.iml
+
+# Build artifacts
+*.jar
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Egg file (not needed in image)
+egg-java-25.json
+
+# Build scripts
+build.sh
+build.ps1
