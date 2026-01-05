@@ -1,221 +1,307 @@
-# Java 25 Docker Image for Pterodactyl
+# Java 25 Docker for Pterodactyl
 
-![Java Version](https://img.shields.io/badge/Java-25-orange)
-![Docker](https://img.shields.io/badge/Docker-Ready-blue)
-![Pterodactyl](https://img.shields.io/badge/Pterodactyl-Compatible-green)
+<div align="center">
 
-**The first publicly available Java 25 Docker image for Pterodactyl!** 🚀
+![Java 25](https://img.shields.io/badge/Java-25.0.1_LTS-orange?style=for-the-badge&logo=openjdk)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Pterodactyl](https://img.shields.io/badge/Pterodactyl-Compatible-0e8a16?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
-This Docker image is specifically designed for running Java 25 applications on Pterodactyl panel, with a primary focus on **Hytale** server hosting when the game is released.
+**The first publicly available Java 25 Docker image for Pterodactyl**
 
-## 🎯 Why Java 25?
+*Ready for Hytale and next-generation Java applications*
 
-Hytale is being developed with Java 25, which means existing Minecraft server hosting solutions won't work out of the box. This Docker image positions you ahead of the curve, ready to host Hytale servers as soon as the game launches.
+[Quick Start](#-quick-start) • [Installation](#-installation) • [Configuration](#-configuration) • [Documentation](#-documentation)
+
+</div>
+
+---
+
+## 🎯 Overview
+
+This Docker image provides a production-ready Java 25 environment specifically optimized for Pterodactyl game server panel. Built on **Eclipse Temurin 25 LTS**, it's designed to support the next generation of Java-based games, with a primary focus on **Hytale** when it releases.
+
+### Why This Matters
+
+Hytale is being developed with Java 25, making this the **only** Docker solution currently available for hosting Hytale servers on Pterodactyl. By using this image, you're positioning yourself ahead of the curve for when the game launches.
+
+---
 
 ## ✨ Features
 
-- ✅ **Java 25** (Eclipse Temurin JDK)
-- ✅ **Pterodactyl-optimized** entrypoint and configuration
-- ✅ **Security-hardened** with non-root user
-- ✅ **Minimal footprint** - only essential dependencies
-- ✅ **Pre-configured** with optimized JVM flags (Aikar's flags)
-- ✅ **Auto-EULA** acceptance support
-- ✅ **Easy deployment** - ready to use egg configuration
+| Feature | Description |
+|---------|-------------|
+| 🚀 **Java 25 LTS** | Latest Eclipse Temurin 25.0.1 with long-term support |
+| 🔒 **Security Hardened** | Non-root user execution, minimal attack surface |
+| ⚡ **Performance Optimized** | Pre-configured with Aikar's battle-tested JVM flags |
+| 🎮 **Game Ready** | Designed for Hytale, compatible with any Java 25 application |
+| 📦 **Lightweight** | Only 655 MB with essential dependencies |
+| 🔧 **Pterodactyl Native** | Full integration with variable substitution and controls |
+| 🤖 **Auto-Configuration** | Automatic JAR download and EULA acceptance |
 
-## 🐳 Building the Docker Image
+---
 
-### Prerequisites
+## 🚀 Quick Start
 
-- Docker installed on your system
-- (Optional) Docker Hub account for publishing
+### For Server Owners
 
-### Build Command
+1. **Import the egg** into your Pterodactyl panel:
+   - Download `egg-java-25.json` from this repository
+   - Navigate to **Admin Panel** → **Nests** → **Import Egg**
+   - Upload the egg file
+
+2. **Create a server** using the **Java 25 Generic** egg
+
+3. **Configure and start** your server with your Java 25 application
+
+### For Pterodactyl Administrators
 
 ```bash
-cd D:\ASAS\TurboMC\java-25-docker
-docker build -t turbomc/java25-pterodactyl:latest .
+# Pull the image
+docker pull janxhg/java25-pterodactyl:latest
+
+# Verify Java version
+docker run --rm janxhg/java25-pterodactyl:latest java -version
 ```
 
-### Build with Version Tag
+---
 
-```bash
-docker build -t turbomc/java25-pterodactyl:1.0.0 -t turbomc/java25-pterodactyl:latest .
-```
+## 📥 Installation
 
-## 📤 Publishing to Docker Hub
+### Step 1: Import the Pterodactyl Egg
 
-1. **Login to Docker Hub:**
-   ```bash
-   docker login
-   ```
+1. Download the egg configuration file: [`egg-java-25.json`](egg-java-25.json)
+2. Access your Pterodactyl admin panel
+3. Navigate to **Nests** → Select or create a nest
+4. Click **Import Egg** and upload the JSON file
+5. Configure the Docker image field: `janxhg/java25-pterodactyl:latest`
 
-2. **Tag your image:**
-   ```bash
-   docker tag turbomc/java25-pterodactyl:latest yourusername/java25-pterodactyl:latest
-   ```
+### Step 2: Create a Server
 
-3. **Push to Docker Hub:**
-   ```bash
-   docker push yourusername/java25-pterodactyl:latest
-   docker push yourusername/java25-pterodactyl:1.0.0
-   ```
-
-## 🥚 Installing the Pterodactyl Egg
-
-1. **Download the egg file:**
-   - Use `egg-java-25.json` from this repository
-
-2. **Import into Pterodactyl:**
-   - Navigate to your Pterodactyl admin panel
-   - Go to **Nests** → Select a nest (or create a new one)
-   - Click **Import Egg**
-   - Upload `egg-java-25.json`
-
-3. **Configure the egg:**
-   - Update the Docker image field to point to your published image
-   - Default: `ghcr.io/pterodactyl/yolks:java_25` (update this to your image)
-
-## 🚀 Usage
-
-### Creating a Server
-
-1. Create a new server in Pterodactyl
+1. Go to **Servers** → **Create New Server**
 2. Select the **Java 25 Generic** egg
-3. Configure the following variables:
-   - **Server JAR File**: URL to download or filename if uploading manually
-   - **Server Memory**: Amount of RAM in MB (e.g., 2048)
-   - **Java Arguments**: JVM flags (pre-configured with Aikar's flags)
-   - **Server Arguments**: Additional server arguments (default: `nogui`)
-   - **Auto Accept EULA**: Set to `true` to automatically accept EULA
+3. Allocate resources (minimum 2GB RAM recommended)
+4. Configure server variables (see [Configuration](#-configuration))
 
-### Example Configuration for Hytale (when available)
+### Step 3: Deploy Your Application
 
+- **Option A**: Provide a direct download URL in `SERVER_JARFILE`
+- **Option B**: Upload your JAR file manually to the server directory
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `SERVER_JARFILE` | Server JAR filename or download URL | `server.jar` | `https://example.com/hytale-server.jar` |
+| `SERVER_MEMORY` | Memory allocation in MB | `2048` | `4096` |
+| `JAVA_ARGS` | JVM arguments (see below) | Aikar's flags | Custom JVM flags |
+| `SERVER_ARGS` | Application-specific arguments | `nogui` | `--world-dir /data` |
+| `AUTO_EULA` | Auto-accept EULA on first start | `true` | `false` |
+
+### Optimized JVM Flags (Aikar's Flags)
+
+The egg comes pre-configured with production-tested JVM flags optimized for game servers:
+
+```bash
+-XX:+UseG1GC
+-XX:+ParallelRefProcEnabled
+-XX:MaxGCPauseMillis=200
+-XX:+UnlockExperimentalVMOptions
+-XX:+DisableExplicitGC
+-XX:+AlwaysPreTouch
+-XX:G1HeapWastePercent=5
+-XX:G1MixedGCCountTarget=4
+-XX:InitiatingHeapOccupancyPercent=15
+-XX:G1MixedGCLiveThresholdPercent=90
+-XX:G1RSetUpdatingPauseTimePercent=5
+-XX:SurvivorRatio=32
+-XX:+PerfDisableSharedMem
+-XX:MaxTenuringThreshold=1
 ```
-Server JAR File: https://example.com/hytale-server.jar
+
+These flags are optimized for:
+- ✅ Low latency and reduced GC pauses
+- ✅ Efficient memory management
+- ✅ High throughput for game servers
+- ✅ Tested with Minecraft (compatible with Hytale)
+
+---
+
+## 🎮 Use Cases
+
+### Hytale Servers (When Released)
+
+```yaml
+Server JAR File: https://hytale.com/downloads/server.jar
 Server Memory: 4096
-Java Arguments: (use default optimized flags)
+Java Arguments: (use default)
 Server Arguments: nogui
 Auto Accept EULA: true
 ```
 
-## 🔧 Configuration Variables
+### Custom Java 25 Applications
 
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `SERVER_JARFILE` | Server JAR filename or download URL | `server.jar` | Yes |
-| `SERVER_MEMORY` | Memory allocation in MB | `2048` | Yes |
-| `JAVA_ARGS` | JVM arguments | Aikar's flags | No |
-| `SERVER_ARGS` | Server-specific arguments | `nogui` | No |
-| `AUTO_EULA` | Auto-accept EULA | `true` | Yes |
-
-## 🎮 Optimized JVM Flags
-
-The egg comes pre-configured with **Aikar's flags**, which are battle-tested for optimal Minecraft server performance:
-
-```
--XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 
--XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch 
--XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 
--XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 
--XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 
--XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1
+```yaml
+Server JAR File: your-application.jar
+Server Memory: 2048
+Java Arguments: -Xms2G -Xmx2G -jar
+Server Arguments: --config /home/container/config.yml
 ```
 
-These flags work great for Minecraft and should also work well for Hytale!
+### Modded Servers
 
-## 🧪 Testing the Image
-
-### Verify Java Version
-
-```bash
-docker run --rm turbomc/java25-pterodactyl:latest java -version
+```yaml
+Server JAR File: https://example.com/modded-server.jar
+Server Memory: 8192
+Java Arguments: (use default + custom mods flags)
+Server Arguments: nogui --forceUpgrade
 ```
-
-Expected output:
-```
-openjdk version "25" 2025-XX-XX
-OpenJDK Runtime Environment Temurin-25+XX (build 25+XX)
-OpenJDK 64-Bit Server VM Temurin-25+XX (build 25+XX, mixed mode, sharing)
-```
-
-### Test Container Startup
-
-```bash
-docker run --rm -e STARTUP="echo 'Test successful!'" turbomc/java25-pterodactyl:latest
-```
-
-## 📋 Troubleshooting
-
-### Issue: Container won't start
-
-**Solution:** Check the Pterodactyl console logs for errors. Ensure the `SERVER_JARFILE` is accessible.
-
-### Issue: Out of memory errors
-
-**Solution:** Increase the `SERVER_MEMORY` variable. For Hytale, we recommend at least 4GB (4096 MB).
-
-### Issue: EULA not accepted
-
-**Solution:** Set `AUTO_EULA` to `true` or manually create an `eula.txt` file with `eula=true`.
-
-### Issue: Java version mismatch
-
-**Solution:** Verify the Docker image is using Java 25:
-```bash
-docker run --rm your-image:tag java -version
-```
-
-## 🔒 Security Considerations
-
-- The container runs as a **non-root user** (`container`)
-- Only essential packages are installed
-- Regular security updates via Eclipse Temurin base image
-- No unnecessary ports exposed
-
-## 📦 What's Included
-
-- **Eclipse Temurin 25 JDK** - Production-ready Java distribution
-- **Essential tools**: curl, wget, git
-- **Network utilities**: iproute2 for IP detection
-- **Timezone support**: tzdata for proper time handling
-- **Font support**: fontconfig for GUI applications
-
-## 🌟 Future Plans
-
-- [ ] Add support for Java 25 preview features
-- [ ] Create specialized Hytale egg when game releases
-- [ ] Add performance monitoring tools
-- [ ] Create multi-arch builds (ARM64 support)
-- [ ] Add automated health checks
-
-## 📄 License
-
-This project is open source and available for anyone to use and modify.
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
-- Share your Hytale server configurations
-
-## 📞 Support
-
-For issues or questions:
-- Open an issue on GitHub
-- Check Pterodactyl documentation
-- Join the TurboMC community
-
-## 🎉 Credits
-
-- **TurboMC** - Docker image and egg creation
-- **Eclipse Adoptium** - Java distribution
-- **Pterodactyl** - Game server management panel
-- **Aikar** - Optimized JVM flags
 
 ---
 
-**Ready for Hytale! 🎮**
+## 📊 Performance Recommendations
 
-Built with ❤️ by TurboMC
+| Server Size | Players | RAM | CPU Cores | Storage |
+|-------------|---------|-----|-----------|---------|
+| **Small** | 1-10 | 2-4 GB | 2 | 10 GB |
+| **Medium** | 10-50 | 4-8 GB | 4 | 20 GB |
+| **Large** | 50-100 | 8-16 GB | 6-8 | 50 GB |
+| **Enterprise** | 100+ | 16+ GB | 8+ | 100+ GB |
+
+> **Note**: These are general recommendations. Actual requirements will vary based on your specific application, plugins, and world size.
+
+---
+
+## 🔧 Technical Details
+
+### Base Image
+- **Distribution**: Eclipse Temurin (formerly AdoptOpenJDK)
+- **Version**: 25.0.1 LTS
+- **OS**: Ubuntu 22.04 LTS (Jammy)
+- **Architecture**: amd64
+
+### Included Packages
+- `curl`, `wget` - Download utilities
+- `git` - Version control
+- `fontconfig` - Font rendering support
+- `ca-certificates` - SSL/TLS support
+- `tzdata` - Timezone data
+- `iproute2` - Network utilities
+
+### Security Features
+- ✅ Non-root user execution (`container:container`)
+- ✅ Minimal package installation
+- ✅ No unnecessary ports exposed
+- ✅ Regular security updates via base image
+
+---
+
+## 🐛 Troubleshooting
+
+<details>
+<summary><b>Container won't start</b></summary>
+
+**Symptoms**: Server fails to start, no output in console
+
+**Solutions**:
+1. Check that `SERVER_JARFILE` is accessible
+2. Verify sufficient disk space
+3. Review Pterodactyl console logs
+4. Ensure proper file permissions
+
+</details>
+
+<details>
+<summary><b>Out of Memory (OOM) errors</b></summary>
+
+**Symptoms**: Server crashes with `OutOfMemoryError`
+
+**Solutions**:
+1. Increase `SERVER_MEMORY` allocation
+2. Optimize JVM flags for your workload
+3. Monitor actual memory usage
+4. Consider upgrading server resources
+
+</details>
+
+<details>
+<summary><b>EULA not accepted</b></summary>
+
+**Symptoms**: Server stops with EULA message
+
+**Solutions**:
+1. Set `AUTO_EULA=true` in egg variables
+2. Manually create `eula.txt` with `eula=true`
+3. Restart the server
+
+</details>
+
+<details>
+<summary><b>Java version mismatch</b></summary>
+
+**Symptoms**: Application requires different Java version
+
+**Solutions**:
+1. Verify your application supports Java 25
+2. Check Docker image version: `docker run --rm janxhg/java25-pterodactyl:latest java -version`
+3. Use appropriate egg for your Java version
+
+</details>
+
+---
+
+## 📚 Documentation
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get up and running in 5 minutes
+- **[Egg Configuration](egg-java-25.json)** - Pterodactyl egg specification
+- **[Dockerfile](Dockerfile)** - Image build configuration
+- **[License](LICENSE)** - MIT License
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+- 🐛 **Report bugs** via GitHub Issues
+- 💡 **Suggest features** for future releases
+- 📝 **Improve documentation** with pull requests
+- 🎮 **Share configurations** for different games
+- ⭐ **Star this repository** if you find it useful
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Credits
+
+- **[Eclipse Adoptium](https://adoptium.net/)** - Java distribution
+- **[Pterodactyl Panel](https://pterodactyl.io/)** - Game server management
+- **[Aikar](https://aikar.co/)** - JVM optimization flags
+- **Community contributors** - Testing and feedback
+
+---
+
+## 🌟 Star History
+
+If this project helps you, please consider giving it a ⭐!
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the gaming community**
+
+Ready for Hytale 🎮 | Optimized for Performance ⚡ | Secure by Design 🔒
+
+[Report Bug](https://github.com/janxhg/java-25-pterodactyl/issues) • [Request Feature](https://github.com/janxhg/java-25-pterodactyl/issues)
+
+</div>
